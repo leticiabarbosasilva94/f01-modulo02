@@ -1,136 +1,33 @@
-/*
-npm i --save-dev babel-eslint eslint eslint-plugin-react
-*/
 module.exports = {
-    "parser": "babel-eslint",
-    "env": {
-        "browser": true,
-        "es6": true,
-        "node": true
+  env: {
+    browser: true,
+    es6: true,
+    node: true,
+  },
+  extends: [
+    'airbnb',
+    'prettier'
+  ],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
     },
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-        "lines-between-class-members": ["error", "always"],
-        "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 2 }],
-        "comma-dangle": ["error", {
-            "arrays": "always",
-            "objects": "always",
-            "imports": "never",
-            "exports": "never",
-            "functions": "never"
-        }],
-        "prefer-const": [
-            "error"
-        ],
-        "max-len": [
-            "error",
-            { "code": 80, "ignoreStrings": true, "ignoreUrls": true }
-        ],
-        "no-unused-vars": [
-            "error",
-            {
-                "varsIgnorePattern": "React"
-                // "varsIgnorePattern": "[Ii]gnored[vV]ar|[R]eact" 
-            }
-        ],
-        "indent": [
-            "error",
-            2
-        ],
-        "space-before-function-paren": [
-            "error",
-            "never"
-        ],
-        "keyword-spacing": [
-            "error",
-            {
-                "after": true,
-                "before": true
-            }
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "eol-last": [
-            "error",
-            "always"
-        ],
-        "space-before-blocks": [
-            "error",
-            "always"
-        ],
-        "comma-spacing": [
-            "error", {
-                "after": true
-            }
-        ],
-        "space-infix-ops": [
-            "error",
-            {
-                "int32Hint": false
-            }
-        ],
-        "key-spacing": [
-            "error",
-            {
-                "afterColon": true
-            }
-        ],
-        "no-trailing-spaces": [
-            "error",
-            {
-                "skipBlankLines": false,
-                // "skipBlankLines": true,
-                "ignoreComments": false,
-                // "ignoreComments": true
-            }
-        ],
-        "space-before-function-paren": [
-            "error",
-            {
-                "anonymous": "never",
-                "named": "never",
-                "asyncArrow": "never"
-            }
-        ],
-        "arrow-spacing": [
-            "error",
-            {
-                "before": true,
-                "after": true
-            }
-        ],
-        "space-in-parens": [
-            "error",
-            "never"
-        ],
-        "object-curly-spacing": [
-            "error",
-            "always"
-        ],
-        "require-atomic-updates": "off"
-    }
+    ecmaVersion: 2018,
+    sourceType: 'module',
+  },
+  plugins: [
+    'react',
+    'prettier'
+  ],
+  rules: {
+    "prettier/prettier": "error",
+    "class-method-use-this": "off",
+    "no-param-reasign": "off",
+    "camel-case": "off",
+    "no-unused-vars": ["error", { "argsIngnorePatter": "next" }],
+  },
 };
