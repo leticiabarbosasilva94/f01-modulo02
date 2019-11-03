@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js --ignore node_modules",
+    "dev:debug": "nodemon --inspect src/server.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +18,11 @@
   "devDependencies": {
     "babel-eslint": "^10.0.3",
     "eslint": "^6.6.0",
-    "eslint-plugin-react": "^7.16.0"
+    "eslint-plugin-react": "^7.16.0",
+    "nodemon": "^1.19.4",
+    "sucrase": "^3.10.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
