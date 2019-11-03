@@ -4,7 +4,7 @@ import User from "../app/models/User";
 
 const models = [User];
 
-export default class Databse {
+class Databse {
   constructor() {
     this.init();
   }
@@ -14,3 +14,5 @@ export default class Databse {
     models.forEach(model => model.init(this.connection));
   }
 }
+
+export default new Databse();
