@@ -24,10 +24,11 @@ module.exports = {
     'prettier'
   ],
   rules: {
-    "prettier/prettier": "error",
+    "prettier/prettier": ["error", { "singleQuote": true }],
     "class-method-use-this": "off",
     "no-param-reasign": "off",
     "camel-case": "off",
     "no-unused-vars": ["error", { "argsIngnorePatter": "next" }],
+    "quotes": ["error", "single"]
   },
 };
