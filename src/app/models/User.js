@@ -11,9 +11,6 @@ export default class User extends Model {
             len: {
               msg: 'Name must have between 3 and 255 characters.',
               args: [3, 255]
-            },
-            notEmpty: {
-              msg: 'Name is required.'
             }
           }
         },
@@ -28,7 +25,15 @@ export default class User extends Model {
             }
           }
         },
-        password: Sequelize.VIRTUAL,
+        password: {
+          type: Sequelize.VIRTUAL,
+          validate: {
+            len: {
+              args: [6, 50],
+              msg: 'Password must have between 6 and 50 characters.'
+            }
+          }
+        },
         password_hash: Sequelize.STRING,
         provider: Sequelize.BOOLEAN
       },
@@ -42,5 +47,7 @@ export default class User extends Model {
         user.password_hash = await bcryptjs.hash(user.password, 8);
       }
     });
+
+    return this;
   }
 }
