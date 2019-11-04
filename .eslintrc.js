@@ -25,9 +25,9 @@ module.exports = {
   ],
   rules: {
     "prettier/prettier": ["error", { "singleQuote": true }],
-    "class-method-use-this": "off",
-    "no-param-reasign": "off",
-    "camel-case": "off",
+    "class-methods-use-this": "off",
+    "no-param-reassign": "off",
+    "camelcase": "off",
     "no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
     "quotes": ["error", "single"]
   },

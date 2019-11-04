@@ -9,5 +9,8 @@ module.exports = {
     underscored: true,
     underscoredAll: true
   },
+  dialectOptions: {
+    timezone: 'America/Sao_Paulo'
+  },
   timezone: 'America/Sao_Paulo'
 };
