@@ -1,8 +1,33 @@
 import User from '../models/User';
 
+const isValidPassword = (password, confirmPassword) => {
+  if (!password || !confirmPassword) {
+    return false;
+  }
+
+  if (password !== confirmPassword) {
+    return false;
+  }
+
+  return true;
+};
+
 const store = async (req, res) => {
   try {
-    const { name = '', email = '', password = '', provider = false } = req.body;
+    const {
+      name = '',
+      email = '',
+      password = '',
+      confirmPassword = '',
+      provider = false
+    } = req.body;
+
+    if (!isValidPassword(password, confirmPassword)) {
+      return res
+        .status(401)
+        .json({ errors: ["Password and confirm password don't match"] });
+    }
+
     const user = await User.create({ name, email, password, provider });
 
     return res.json({
@@ -18,10 +43,55 @@ const store = async (req, res) => {
   }
 };
 
+const update = async (req, res) => {
+  try {
+    const { name, email, password, oldPassword, confirmPassword } = req.body;
+    if (!req.userId) {
+      return res.status(400).json({ errors: 'User ID not provided.' });
+    }
+
+    if (password) {
+      if (!isValidPassword(password, confirmPassword)) {
+        return res
+          .status(401)
+          .json({ errors: ["Password and confirm password don't match"] });
+      }
+    }
+
+    if (password && !oldPassword) {
+      return res
+        .status(400)
+        .json({ errors: 'To change password, send the oldPassword.' });
+    }
+
+    if (!name && !email && !password && !oldPassword) {
+      return res.status(400).json({ errors: 'Nothing to change.' });
+    }
+
+    const user = await User.findByPk(req.userId);
+    if (!user) return res.status(400).json({ errors: 'User do not exists.' });
+
+    if (oldPassword && !(await user.passwordIsValid(oldPassword))) {
+      return res.status(401).json({ errors: 'Invalid old password.' });
+    }
+
+    const userUpdated = await user.update({ name, email, password });
+
+    return res.json({
+      name: userUpdated.name,
+      password: userUpdated.password,
+      email: userUpdated.email,
+      provider: userUpdated.provider
+    });
+  } catch (e) {
+    return res
+      .status(400)
+      .json({ errors: e.errors.map(error => error.message) });
+  }
+};
+
 // eslint-disable-next-line
 const show = async (req, res) => {};
-// eslint-disable-next-line
-const update = async (req, res) => {};
 // eslint-disable-next-line
 const remove = async (req, res) => {};
 // eslint-disable-next-line
