@@ -45,7 +45,15 @@ const store = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { name, email, password, oldPassword, confirmPassword } = req.body;
+    const {
+      name,
+      email,
+      password,
+      oldPassword,
+      confirmPassword,
+      avatar_id
+    } = req.body;
+
     if (!req.userId) {
       return res.status(400).json({ errors: 'User ID not provided.' });
     }
@@ -75,7 +83,7 @@ const update = async (req, res) => {
       return res.status(401).json({ errors: 'Invalid old password.' });
     }
 
-    const userUpdated = await user.update({ name, email, password });
+    const userUpdated = await user.update({ name, email, password, avatar_id });
 
     return res.json({
       name: userUpdated.name,
