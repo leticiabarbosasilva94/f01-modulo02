@@ -15,7 +15,7 @@ class Appointment extends Model {
         },
         canceled_at: {
           type: Sequelize.DATE,
-          defaultValue: '',
+          defaultValue: null,
           validate: {
             isDate: {
               msg: 'canceled_at: Invalid date'
