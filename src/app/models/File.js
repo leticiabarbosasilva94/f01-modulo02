@@ -36,4 +36,4 @@ class File extends Model {
   }
 }
 
-module.exports = File;
+export default File;
