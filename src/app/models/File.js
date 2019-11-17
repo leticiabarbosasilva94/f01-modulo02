@@ -19,6 +19,12 @@ class File extends Model {
               msg: 'Path cannot be empty'
             }
           }
+        },
+        url: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            return `http://localhost:3333/files/${this.getDataValue('path')}`;
+          }
         }
       },
       {

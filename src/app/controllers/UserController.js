@@ -72,7 +72,7 @@ const update = async (req, res) => {
         .json({ errors: 'To change password, send the oldPassword.' });
     }
 
-    if (!name && !email && !password && !oldPassword) {
+    if (!name && !email && !password && !oldPassword && !avatar_id) {
       return res.status(400).json({ errors: 'Nothing to change.' });
     }
 
