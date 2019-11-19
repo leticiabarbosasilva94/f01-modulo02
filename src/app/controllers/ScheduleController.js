@@ -9,22 +9,21 @@ class ScheduleController {
   }
 
   async checkUserProvider(req) {
-    const isProvider = await User.findOne({
+    const userProvider = await User.findOne({
       where: {
         id: req.userId,
         provider: true
       },
-      limit: 1,
-      attributes: ['id']
+      limit: 1
     });
 
-    return isProvider;
+    return userProvider;
   }
 
   async index(req, res) {
-    const isProvider = await this.checkUserProvider(req);
+    const userProvider = await this.checkUserProvider(req);
 
-    if (!isProvider) {
+    if (!userProvider) {
       return res.status(401).json({
         errors: ["You're not a provider."]
       });
@@ -49,7 +48,7 @@ class ScheduleController {
       order: [['date', 'DESC']]
     });
 
-    res.json(appointments);
+    return res.json(appointments);
   }
 }
 

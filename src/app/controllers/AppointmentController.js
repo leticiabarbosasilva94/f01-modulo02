@@ -1,8 +1,11 @@
-import { startOfHour, parseISO, isBefore } from 'date-fns';
+import { startOfHour, parseISO, isBefore, format } from 'date-fns';
+import pt from 'date-fns/locale/pt-BR';
 // import { Op } from 'sequelize';
 import Appointment from '../models/Appointment';
 import User from '../models/User';
 import File from '../models/File';
+
+import Notification from '../schemas/Notification';
 
 class AppointmentController {
   async index(req, res) {
@@ -46,6 +49,18 @@ class AppointmentController {
       if (!date || !provider_id || !req.userId) {
         return res.status(400).json({
           errors: ['Missing values: send date, provider_id and user_id']
+        });
+      }
+
+      const user = await User.findOne({
+        where: {
+          id: req.userId
+        }
+      });
+
+      if (!user) {
+        return res.status(400).json({
+          errors: ['Your user do not exists.']
         });
       }
 
@@ -96,8 +111,19 @@ class AppointmentController {
       }
 
       data.date = hourStart;
+      const formatedDate = format(
+        hourStart,
+        "'dia' dd 'de' MMMM 'de' yyyy', às' H:mm'h'",
+        { locale: pt }
+      );
 
       const appointment = await Appointment.create(data);
+
+      await Notification.create({
+        content: `Novo agendamento de ${user.name} para ${formatedDate}`,
+        user: provider_id
+      });
+
       return res.json(appointment);
     } catch (e) {
       return res.status(400).json({
