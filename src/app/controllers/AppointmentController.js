@@ -1,4 +1,4 @@
-import { startOfHour, parseISO, isBefore, format } from 'date-fns';
+import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt-BR';
 // import { Op } from 'sequelize';
 import Appointment from '../models/Appointment';
@@ -132,8 +132,43 @@ class AppointmentController {
     }
   }
 
+  async delete(req, res) {
+    const appointment = await Appointment.findByPk(req.params.id);
+
+    if (!appointment) {
+      return res.status(400).json({
+        errors: ['Appointment do not exists']
+      });
+    }
+
+    if (appointment.user_id !== req.userId) {
+      return res.status(401).json({
+        errors: ['Permission denied']
+      });
+    }
+
+    if (appointment.canceled_at) {
+      return res.status(400).json({
+        errors: ['Appointment canceled']
+      });
+    }
+
+    const dateTwoHoursBefore = subHours(appointment.date, 2);
+    const canCancel = isBefore(dateTwoHoursBefore, new Date());
+
+    if (!canCancel) {
+      return res.status(401).json({
+        errors: ['You cannot cancel this appointment']
+      });
+    }
+
+    appointment.canceled_at = new Date();
+    await appointment.save();
+
+    return res.json(appointment);
+  }
+
   // async upate(req, res) {}
-  // async delete(req, res) {}
 }
 
 export default new AppointmentController();
