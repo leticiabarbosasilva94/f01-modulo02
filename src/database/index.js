@@ -23,7 +23,7 @@ class Database {
 
   mongo() {
     this.mongoConnection = mongoose.connect(
-      'mongodb://gba:senhagba@localhost:27017/gba',
+      process.env.MONGODB_CONNECTION_STRING,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
