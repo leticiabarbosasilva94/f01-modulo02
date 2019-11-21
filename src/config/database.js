@@ -10,7 +10,7 @@ module.exports = {
     underscoredAll: true
   },
   dialectOptions: {
-    timezone: 'America/Sao_Paulo'
+    timezone: process.env.TZ
   },
-  timezone: 'America/Sao_Paulo'
+  timezone: process.env.TZ
 };
