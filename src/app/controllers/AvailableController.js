@@ -65,9 +65,7 @@ class AvailableController {
                 String(new Date(appointment.date).toISOString()) ===
                 String(nDate.toISOString())
               );
-            }) && nDate > new Date(),
-          nDate,
-          t2: nDate.getTime()
+            }) && nDate > new Date()
         };
       })
       .filter(
