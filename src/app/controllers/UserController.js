@@ -1,4 +1,5 @@
 import User from '../models/User';
+import File from '../models/File';
 
 const isValidPassword = (password, confirmPassword) => {
   if (!password || !confirmPassword) {
@@ -85,11 +86,22 @@ const update = async (req, res) => {
 
     const userUpdated = await user.update({ name, email, password, avatar_id });
 
+    const { avatar } = User.findByPk(req.userId, {
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['id', 'path', 'url']
+        }
+      ]
+    });
+
     return res.json({
       name: userUpdated.name,
       password: userUpdated.password,
       email: userUpdated.email,
-      provider: userUpdated.provider
+      provider: userUpdated.provider,
+      avatar
     });
   } catch (e) {
     return res
