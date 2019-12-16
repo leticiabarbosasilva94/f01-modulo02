@@ -86,7 +86,7 @@ const update = async (req, res) => {
 
     const userUpdated = await user.update({ name, email, password, avatar_id });
 
-    const { avatar } = User.findByPk(req.userId, {
+    const { avatar } = await User.findByPk(req.userId, {
       include: [
         {
           model: File,
